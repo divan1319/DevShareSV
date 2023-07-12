@@ -18,7 +18,6 @@ return new class extends Migration
             $table->char('privacy',50);
             $table->char('status',50);
             $table->integer('limit_requets')->default(5);
-            $table->foreignId('technology_id')->constrained('technologies');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->date('created_at');
         });
