@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 });*/
 
-Route::group([
+/*Route::group([
     'middleware'=> 'api',
     'prefix'=>'auth'
 ],function(){
@@ -27,3 +27,13 @@ Route::group([
     Route::post('/register',[AuthController::class,'register']);
     Route::post('/refresh',[AuthController::class,'refresh']);
 });
+*/
+//Route::controller(AuthController::class)->group();
+Route::middleware('api')->prefix('auth')->controller(AuthController::class)->group(function(){
+    Route::post('/login','login');
+    Route::post('/register','register');
+    Route::post('/refresh','refresh');
+    Route::get('/home','hello');
+});
+
+
