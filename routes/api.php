@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Projects\ProjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,4 +37,7 @@ Route::middleware('api')->prefix('auth')->controller(AuthController::class)->gro
     Route::get('/home','hello');
 });
 
-
+Route::middleware('api')->prefix('projects')->controller(ProjectController::class)->group(function(){
+    Route::post('/create-project','store');
+    Route::get('/all-projects','index');
+});
