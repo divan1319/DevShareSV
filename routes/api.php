@@ -38,6 +38,7 @@ Route::middleware('api')->prefix('auth')->controller(AuthController::class)->gro
 });
 
 Route::middleware('api')->prefix('projects')->controller(ProjectController::class)->group(function(){
-    Route::post('/create-project','store');
+    Route::post('/create-project','CrearProyecto');
+    Route::post('/add-rol','AgregarRolProyecto');
     Route::get('/all-projects','index');
 });

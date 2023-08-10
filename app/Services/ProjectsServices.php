@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Requests\CreateProjectRequest;
 use App\Models\Project;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 class ProjectsServices{
     public function getProjects(): JsonResponse{
@@ -27,5 +28,13 @@ class ProjectsServices{
             'created_at'=>$datos['created_at'],
         ]);
         return response()->json($project);
+    }
+
+    public function addRoleProject($datos): JsonResponse{
+        $rol = DB::table('projects_users')->where('project_id',$datos['project_id'])->where('user_id',$datos['user_id'])->update(['role_id'=>$datos['role_id']]);
+        return response()->json([
+            'message'=>'Rol agregado correctamente',
+            'status'=>$rol
+        ]);
     }
 }
