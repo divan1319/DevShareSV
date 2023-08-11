@@ -57,5 +57,9 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims() {
         return [];
-    } 
+    }
+    
+    public function projects(){
+        return $this->belongsToMany(Project::class,'projects_users','user_id','project_id')->using(ProjectUser::class)->withPivot('role_id');
+    }
 }

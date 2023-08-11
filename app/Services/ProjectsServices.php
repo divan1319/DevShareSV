@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\CreateProjectRequest;
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
@@ -31,10 +32,25 @@ class ProjectsServices{
     }
 
     public function addRoleProject($datos): JsonResponse{
-        $rol = DB::table('projects_users')->where('project_id',$datos['project_id'])->where('user_id',$datos['user_id'])->update(['role_id'=>$datos['role_id']]);
+        $user = User::find($datos['user_id']);
+        $project = Project::find($datos['project_id']);
+
+        if($user && $project){
+            $user->projects()->updateExistingPivot($project->id,['role_id' => $datos['role_id']]);
+        }
+        
         return response()->json([
             'message'=>'Rol agregado correctamente',
-            'status'=>$rol
+            
+        ]);
+    }
+
+    public function addTechsProject($datos){
+        $project = Project::findOrFail($datos['project_id']);
+        $project->technologies()->syncWithoutDetaching($datos['technology_id']);
+        return response()->json([
+            'message'=>'Roles agregados correctamente',
+            'projecto'=>$project
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Projects;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateProjectRequest;
+use App\Http\Requests\RolProyectoRequest;
 use App\Services\ProjectsServices;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -33,4 +34,9 @@ class ProjectController extends Controller
         return $res;
     }
 
+    public function AgregarTechsProyecto(RolProyectoRequest $rolProyectoRequest,ProjectsServices $projects_services){
+        $data = $rolProyectoRequest->validated();
+        $res = $projects_services->addTechsProject($data);
+        return $res;
+    }
 }
